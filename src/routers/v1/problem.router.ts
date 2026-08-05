@@ -1,28 +1,23 @@
 import express from 'express';
-import { ProblemRepository } from '../../repositories/problem.repository';
-import { ProblemService } from '../../services/problem.service';
 import { ProblemController } from '../../controllers/problem.controller';
 import { validateRequestBody, validateRequestParams } from '../../validators';
 import { createProblemSchema, findByDifficultySchema, updateProblemSchema } from '../../validators/problem.validator';
 
 const problemRouter = express.Router();
 
-const problemRepository = new ProblemRepository()
-const problemService = new ProblemService(problemRepository)
-const problemController = new ProblemController(problemService)
 
-problemRouter.post('/',validateRequestBody(createProblemSchema), problemController.createProblem)
+problemRouter.post('/',validateRequestBody(createProblemSchema), ProblemController.createProblem)
 
-problemRouter.get('/:id',problemController.getProblemById)
+problemRouter.get('/:id',ProblemController.getProblemById)
 
-problemRouter.get('/',problemController.getAllProblems)
+problemRouter.get('/',ProblemController.getAllProblems)
 
-problemRouter.put('/:id',validateRequestBody(updateProblemSchema),problemController.updateProblem)
+problemRouter.put('/:id',validateRequestBody(updateProblemSchema),ProblemController.updateProblem)
 
-problemRouter.delete('/:id',problemController.deleteProblem)
+problemRouter.delete('/:id',ProblemController.deleteProblem)
 
-problemRouter.get('/difficulty/:difficulty',validateRequestParams(findByDifficultySchema),problemController.findByDifficulty)
+problemRouter.get('/difficulty/:difficulty',validateRequestParams(findByDifficultySchema),ProblemController.findByDifficulty)
 
-problemRouter.get('/search',problemController.searchProblems)
+problemRouter.get('/search',ProblemController.searchProblems)
 
 export default problemRouter;
